@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const dboper = require('./operations');
 
 const url = 'mongodb://localhost:27017';
 const dbname = 'confusion';
@@ -10,23 +11,22 @@ MongoClient.connect(url, (err, client) => {
 
     const db = client.db(dbname);
 
-    const collection = db.collection('dishes');
+    dboper.insertDocument(db, { "name": "Vadonut", "description": "I am Vadonut" }, 'dishes', (result) => {
+        console.log('Inserted Document:\n' + JSON.stringify(result.insertedIds));
 
-    collection.insertOne({ "name": "Pizza", "description": "I am a Pizza" }, (err, result) => {
-        assert.equal(err, null);
+        dboper.findDocuments(db, 'dishes', (docs) => {
+            console.log('Found Documents: \n' + JSON.stringify(docs));
 
-        console.log("After insert: \n");
-        console.log("Result: " + result + " Operation: " + result.ops);
+            dboper.updateDocument(db, { name: "Vadonut" }, { description: "Updated Description" }, 'dishes', (result) => {
+                console.log("Updated Document:\n", JSON.stringify(result));
 
-        console.log("Resulting collection: \n");
-        collection.find({}).toArray((err, docs) => {
-            assert.equal(err, null);
+                dboper.findDocuments(db, 'dishes', (docs) => {
+                    console.log('Found Documents: \n' + JSON.stringify(docs));
 
-            console.log(docs);
-
-            db.dropCollection('dishes', (err, result) => {
-                assert.equal(err, null);
-                client.close();
+                    db.dropCollection('dishes', () => {
+                        client.close();
+                    });
+                });
             });
         });
     });
