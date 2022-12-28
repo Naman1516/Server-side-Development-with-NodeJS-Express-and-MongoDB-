@@ -1,6 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-const { client } = require('browser-sync/dist/config');
 
 const url = 'mongodb://localhost:27017';
 const dbname = 'confusion';
