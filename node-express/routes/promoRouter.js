@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const dishRouter = express.Router();
+const promoRouter = express.Router();
 
-dishRouter.use(bodyParser.json());
+promoRouter.use(bodyParser.json());
 
-dishRouter.route('/')
+promoRouter.route('/')
     .all((req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
@@ -13,25 +13,25 @@ dishRouter.route('/')
     })
 
     .get((req, res, next) => {
-        res.end('Will send all the dishes to you!');
+        res.end('Will send all the promotions to you!');
     })
 
     .post((req, res, next) => {
-        res.end('Will add the dish: ' + req.body.name + ' with details: ' + req.body.description);
+        res.end('Will add the promotion: ' + req.body.name + ' with details: ' + req.body.description);
     })
 
     .put((req, res, next) => {
         res.statusCode = 403;
-        res.end('PUT operation not supported on dishes');
+        res.end('PUT operation not supported on promotions');
     })
 
     .delete((req, res, next) => {
-        res.end('Deleting all dishes');
+        res.end('Deleting all promotions');
     });
 
-dishRouter.route('/:dishId')
+promoRouter.route('/:promoId')
     .get((req, res, next) => {
-        res.end('Will send details of dish ' + req.params.dishId);
+        res.end('Will send details of promotion ' + req.params.promoId);
     })
 
     .post((req, res, next) => {
@@ -41,11 +41,11 @@ dishRouter.route('/:dishId')
 
     .put((req, res, next) => {
         req.statusCode = 403;
-        res.end('Will update dish ' + req.params.dishId);
+        res.end('Will update promotion ' + req.params.promoId);
     })
 
     .delete((req, res, next) => {
-        res.end('Deleting dish with ID ' + req.params.dishId);
+        res.end('Deleting promotion with ID ' + req.params.promoId);
     });
 
-module.exports = dishRouter;
+module.exports = promoRouter;
