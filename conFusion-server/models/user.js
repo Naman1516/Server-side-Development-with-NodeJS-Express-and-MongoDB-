@@ -7,11 +7,11 @@ var User = new Schema({
         required: true,
         unique: true
     },
-    password:  {
+    password: {
         type: String,
         required: true
     },
-    admin:   {
+    admin: {
         type: Boolean,
         default: false
     }
