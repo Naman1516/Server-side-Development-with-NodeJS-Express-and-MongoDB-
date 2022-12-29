@@ -11,7 +11,7 @@ var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
 
 function auth(req, res, next) {
-  console.log(req.signedCookies);
+  console.log(JSON.stringify(req.signedCookies));
 
   if (!req.signedCookies.user) {
     var authHeader = req.headers.authorization;
